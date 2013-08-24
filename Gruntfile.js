@@ -26,6 +26,7 @@ module.exports = function(grunt){
           'src/stepIn.js',
           'src/module.js',
           'src/global.js',
+          'src/event.js',
           'src/stepOut.js'
         ],
         dest: 'lib/module.js'
