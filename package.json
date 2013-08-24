@@ -1,0 +1,23 @@
+{
+  "name": "modulejs",
+  "version": "0.0.1",
+  "description": "javascript module loader",
+  "main": "lib/modulejs",
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xionglun/modulejs.git"
+  },
+  "keywords": [
+    "javascript",
+    "module",
+    "loader"
+  ],
+  "author": "Allen Heavey",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/xionglun/modulejs/issues"
+  }
+}
