@@ -1,0 +1,4 @@
+
+var modulejs = {
+  version: '#@VERSION'
+};

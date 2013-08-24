@@ -1,2 +1,3 @@
+  window.modulejs = modulejs;
 
 })(window);
