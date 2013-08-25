@@ -1,4 +1,0 @@
-
-var modulejs = {
-  version: '#@VERSION'
-};

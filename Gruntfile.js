@@ -13,7 +13,7 @@ module.exports = function(grunt){
         }
       },
       afterConcat: {
-        src: ['lib/module.js'],
+        src: ['lib/fork.js'],
         options: {
           curly: true
         }
@@ -24,29 +24,29 @@ module.exports = function(grunt){
       dist: {
         src: [
           'src/stepIn.js',
-          'src/module.js',
+          'src/fork.js',
           'src/global.js',
           'src/event.js',
           'src/stepOut.js'
         ],
-        dest: 'lib/module.js'
+        dest: 'lib/fork.js'
       }
     },
 
     uglify: {
       options: {
-        banner: '/* module.js <%= pkg.version%> \n Copyright (c) 2013 Allen Heavey\n*/'
+        banner: '/* fork.js <%= pkg.version%> \n Copyright (c) 2013 Allen Heavey\n*/'
       },
       dist: {
-        src: 'lib/module.js',
-        dest: 'lib/module.min.js'
+        src: 'lib/fork.js',
+        dest: 'lib/fork.min.js'
       }
     }
 
   });
 
   grunt.registerTask('updateVersion', function(){
-    var filepath = 'lib/module.js';
+    var filepath = 'lib/fork.js';
     var version = grunt.config('pkg.version');
 
     var code = grunt.file.read(filepath);

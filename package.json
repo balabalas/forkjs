@@ -1,14 +1,14 @@
 {
-  "name": "modulejs",
+  "name": "fork.js",
   "version": "0.0.1",
   "description": "javascript module loader",
-  "main": "lib/modulejs",
+  "main": "lib/fork.js",
   "scripts": {
     "test": "grunt"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/xionglun/modulejs.git"
+    "url": "https://github.com/xionglun/forkjs.git"
   },
   "keywords": [
     "javascript",
@@ -18,7 +18,7 @@
   "author": "Allen Heavey",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/xionglun/modulejs/issues"
+    "url": "https://github.com/xionglun/forkjs/issues"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
