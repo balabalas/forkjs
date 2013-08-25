@@ -1,3 +1,3 @@
-  window.modulejs = modulejs;
+  window.forkjs = forkjs;
 
 })(window);

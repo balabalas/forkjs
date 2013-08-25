@@ -3,7 +3,7 @@ var events = data.events = {};
 
 // add an event listener
 // and same listener should just add once.
-modulejs.on = function(name, callback){
+forkjs.on = function(name, callback){
   var list = events[name] || (events[name] = []);
   var CB_EXISTS = false;
 
@@ -17,13 +17,13 @@ modulejs.on = function(name, callback){
     list.push(callback);
   }
 
-  return modulejs;
+  return forkjs;
 };
 
-modulejs.addListener = modulejs.on;
+forkjs.addListener = forkjs.on;
 
 // remove listener or all listeners for an event.
-modulejs.off = function(name, callback){
+forkjs.off = function(name, callback){
   if(!name) {
     throw new Error('You should have a name when you remove a listener.');
   }
@@ -47,10 +47,10 @@ modulejs.off = function(name, callback){
   return module.js;
 };
 
-modulejs.removeListener = modulejs.off;
+forkjs.removeListener = forkjs.off;
 
 // remove all listeners
-modulejs.removeAllListener = function(name){
+forkjs.removeAllListener = function(name){
   if(name) {
     delete events[name];
   }
@@ -61,7 +61,7 @@ modulejs.removeAllListener = function(name){
 };
 
 // emit event
-modulejs.emit = function(name) {
+forkjs.emit = function(name) {
   var list = events[name];
   var argv = arguments.slice(1);
   var fn;
