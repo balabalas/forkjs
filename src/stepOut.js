@@ -1,3 +1,4 @@
-  window.forkjs = forkjs;
+window.forkjs = forkjs;
+window.require = require;
 
 })(window);

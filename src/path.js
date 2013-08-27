@@ -15,12 +15,31 @@ function dirname(path){
 var cwd = data.cwd = dirname(loc.href);
 
 function normalize(id) {
+  var append = id.slice(-3);
+  if(append !== '.js') {
+    id += '.js';
+  }
+  return id;
+}
+
+// join refUri and id
+function join(id, refUri, option) {
+  var ret;
+  if(!option) {
+    ret = refUri + id;
+  }
+  else if(option === 'r') {
+  }
+  else if(option === 'a') {
+  }
+
+  return ret;
 }
 
 // add base uri to id.
 function addBase(id, refUri) {
 
-  if(isAbsolute(path)) {
+  if(isAbsolute(id)) {
     return id;
   }
 
@@ -30,11 +49,16 @@ function addBase(id, refUri) {
 
   if(firstByte === '.') {
     if(firstChar === './') {
+      ret = refUri + id.substring(2);
     }
     else if(firstChar === '..') {
+      // join relative path
+      ret = join(id, refUri, 'r');
     }
   }
   else if(firstByte === '/') {
+    // join absolute path
+    ret = join(id, refUri, 'a');
   }
   else {
   }
@@ -42,7 +66,7 @@ function addBase(id, refUri) {
   return ret;
 }
 
-// refUri: http://hello.com/a/b
+// refUri: http://hello.com/a/b/
 // ./good.js      ==> http://hello.com/a/b/good.js
 // ../dir/best.js ==> http://hello.com/a/dir/best.js
 // /better.js     ==> http://hello.com/better.js

@@ -27,6 +27,9 @@ module.exports = function(grunt){
           'src/fork.js',
           'src/global.js',
           'src/event.js',
+          'src/path.js',
+          'src/request.js',
+          'src/module.js',
           'src/stepOut.js'
         ],
         dest: 'lib/fork.js'
