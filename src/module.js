@@ -5,21 +5,7 @@ var fetchingList = {};
 var fetchedList = {};
 var callbackList = {};
 
-var STATUS = Module.STATUS = {
-  // 1. The `module.uri` is being fetched
-  FETCHING: 1,
-  // 2. The meta data has been saved to cachedMods
-  SAVED: 2,
-  // 3. The `module.dependencies` are being loaded
-  LOADING: 3,
-  // 4. The module has already loaded.
-  LOADED: 4,
-  // 5. The module is being executed.
-  EXECUTING: 5,
-  // 6. The `module.exports` is available.
-  EXECUTED: 6
-};
-
+// module constructor
 function Module(uri){
   this.uri = uri;
   this.exports = null;
@@ -92,53 +78,18 @@ Module.prototype.fetch = function(requestCache){
   var mod = this;
   var uri = mod.uri;
 
-  mod.status = STATUS.FETCHING;
+  mod.status = mod.status < STATUS.FETCHING ? (mod.status) : STATUS.FETCHING;
 
-  var emitData = { uri: uri };
-  emit('fetch', emitData);
+  fetchingList[uri] = true;
+  callbackList[uri] = [mod];
 
-  var requestUri = emitData.requestUri || uri;
-
-  if(fetchingList[requestUri]) {
-    callbackList[requestUri].push(mod);
-    return;
-  }
-
-  fetchingList[requestUri] = true;
-  callbackList[requestUri] = [mod];
-
-  emit('request', emitData = {
-    uri: uri,
-    requestUri: requestUri,
-    onRequest: onRequest,
-    charset: data.charset
-  });
-
-  if(!emitData.requested) {
-    var _notRequested = requestCache ? 
-        requestCache[emitData.requestUri] = sendRequest : 
-        sendRequest();
+  if(mod.status < STATUS.LOADING) {
+    mod.status = STATUS.LOADING;
+    sendRequest();
   }
 
   function sendRequest(){
-    request(emitData.requestUri, emitData.onRequest, emitData.charset);
-  }
-
-  function onRequest() {
-    delete fetchingList[requestUri];
-    fetchedList[requestUri] = true;
-
-    if(anonymousMeta) {
-      Module.save(uri, anonymousMeta);
-      anonymousMeta = null;
-    }
-
-    var m, mods = callbackList[requestUri];
-
-    delete callbackList[requestUri];
-    while ((m = mods.shift())) {
-      m.load();
-    }
+    request(requestUri,  mod);
   }
 };
 
@@ -150,7 +101,7 @@ Module.get = function(uri) {
     return mod;
   }
 
-  mod.status = STATUS.EXECUTING;
+  mod.status = STATUS.FETCHING;
 
   mod.fetch();
 
@@ -160,16 +111,22 @@ Module.get = function(uri) {
 // execute a module then get its exports
 Module.prototype.exec = function() {
   var mod = this;
+  var ret;
 
+  while(mod.status < STATUS.EXECUTING) {
+    setTimeout(wait, 0);
+  }
+
+ if(mod.status >= STATUS.EXECUTING) {
+    ret = mod.exports;
+  }
   // execute just return that exports.
-  return mod.exports;
+  return ret;
 };
 
-function require(id){
-  return Moduel.get(Module.resolve(id, forkjs.cwd)).exec();
-}
-
-
-
-
+Module.prototype.require = function(id){
+  var mod = this;
+  var refUri = mod.uri || forkjs.cwd;
+  return Module.get(Module.resolve(id, refUri)).exec();
+};
 
