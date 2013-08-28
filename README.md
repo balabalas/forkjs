@@ -3,7 +3,7 @@
 
 
 ## Target
-[Why i create this repo](./docs/reason.md)
+[Why i create this repo](./docs/reason_cn.md)
 
 
 ## About
