@@ -10,15 +10,16 @@ function isAbsolute(path) {
 }
 
 var DIRNAME_REG = /[^?#]*\//;
+var DOUBLE_DOT_REG = /\/[^/]+\/\.\.\//;
 
-// dirname('a/b/c/d.js') ==> 'a/b/c'
+// dirname('a/b/c/d.js') ==> 'a/b/c/'
 function dirname(path){
   return path.match(DIRNAME_REG)[0];
 }
 
 var cwd = data.cwd = dirname(loc.href);
 
-// 
+// make sure appendix
 function normalize(id) {
   var append = id.slice(-3);
   if(append !== '.js') {
@@ -34,8 +35,14 @@ function join(id, refUri, option) {
     ret = refUri + id;
   }
   else if(option === 'r') {
+    ret = dirname(refUri) + id;
+    while(ret.match(DOUBLE_DOT_REG)) {
+      ret = ret.replace(DOUBLE_DOT_REG, '/');
+    }
   }
   else if(option === 'a') {
+    ret = refUri ? dirname(refUri) + id :
+                   xHostName + id;
   }
 
   return ret;
