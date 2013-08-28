@@ -1,8 +1,12 @@
-function isAbsolute(path){
-  var netAbsolute = path.substring(0, 6) === 'http://';
-  var fileAbsolute = path.substring(0, 6) === 'file://';
+function isURL(path){
+  var netURL = path.substring(0, 6) === 'http://';
+  var fileURL = path.substring(0, 6) === 'file://';
 
-  return netAbsolute || fileAbsolute;
+  return netURL || fileURL;
+}
+
+function isAbsolute(path) {
+  return path.charAt(0) === '/';
 }
 
 var DIRNAME_REG = /[^?#]*\//;
@@ -14,6 +18,7 @@ function dirname(path){
 
 var cwd = data.cwd = dirname(loc.href);
 
+// 
 function normalize(id) {
   var append = id.slice(-3);
   if(append !== '.js') {
@@ -75,6 +80,10 @@ function resolveId(id, refUri) {
 
   if(!id) {
     throw new Error('You should require something.');
+  }
+
+  if(isURL(id)) {
+    return id;
   }
 
   if(!refUri) {

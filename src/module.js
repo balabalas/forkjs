@@ -18,7 +18,7 @@ Module.resolve = function(id, refUri) {
   emit('resolve', emitData);
 
   // return the real uri for module.
-  return emitData.uri || id2uri(id, refUri);
+  return emitData.uri || resolveId(id, refUri);
 };
 
 Module.prototype.resolve = function(){

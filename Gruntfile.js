@@ -25,6 +25,7 @@ module.exports = function(grunt){
         src: [
           'src/stepIn.js',
           'src/fork.js',
+          'src/util.js',
           'src/global.js',
           'src/event.js',
           'src/path.js',
