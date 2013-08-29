@@ -9,15 +9,13 @@ function isAbsolute(path) {
   return path.charAt(0) === '/';
 }
 
-var DIRNAME_REG = /[^?#]*\//;
 var DOUBLE_DOT_REG = /\/[^/]+\/\.\.\//;
 
 // dirname('a/b/c/d.js') ==> 'a/b/c/'
 function dirname(path){
+  var DIRNAME_REG = /[^?#]*\//;
   return path.match(DIRNAME_REG)[0];
 }
-
-var cwd = data.cwd = dirname(loc.href);
 
 // make sure appendix
 function normalize(id) {

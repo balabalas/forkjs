@@ -63,7 +63,7 @@ function addOnload(node, callback, global, module) {
       // save module status here.
       module.save();
 
-      normalWindow(global);
+      resumeWindow(global);
     }
   };
 }
