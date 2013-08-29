@@ -30,7 +30,7 @@ function clone(obj){
 }
 
 // reset window object status
-function normalWindow(global){
+function resumeWindow(global){
   var g = global;
 
   if(g) {
