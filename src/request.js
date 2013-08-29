@@ -25,14 +25,14 @@ function request(url, module) {
     addOnload(node, global, module);
   }
 
+  module.status = STATUS.LOADED;
+
   node.async = true;
   node.src = url;
 
   currentlyAddingScript = node;
 
   head.appendChild(node);
-
-  module.status = STATUS.LOADED;
 
   currentlyAddingScript = null;
 
