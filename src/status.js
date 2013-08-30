@@ -19,6 +19,7 @@ function wait(){
 }
 
 // object clone.
+// used to clone *window* to *global*
 function clone(obj){
   var ret = {};
 

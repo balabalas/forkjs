@@ -61,9 +61,9 @@ forkjs.removeAllListener = function(name){
 };
 
 // emit event
-forkjs.emit = function(name) {
+var emit = forkjs.emit = function(name) {
   var list = events[name];
-  var argv = arguments.slice(1);
+  var argv = Array.prototype.slice.call(arguments,1);
   var fn;
 
   if(list) {

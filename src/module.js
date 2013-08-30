@@ -17,8 +17,9 @@ Module.resolve = function(id, refUri) {
   var emitData = {id: id, refUri: refUri};
   emit('resolve', emitData);
 
+  var surl = emitData.uri || resolveId(id, refUri);
   // return the real uri for module.
-  return emitData.uri || resolveId(id, refUri);
+  return surl;
 };
 
 Module.prototype.resolve = function(){
@@ -89,12 +90,13 @@ Module.prototype.fetch = function(requestCache){
   }
 
   function sendRequest(){
-    request(requestUri,  mod);
+    request(uri,  mod);
   }
 };
 
 // get a module by uri
 Module.get = function(uri) {
+  uri = Module.resolve(uri);
   var mod = cachedMods[uri] || (cachedMods[uri] = new Module(uri));
 
   if(mod.status >= STATUS.EXECUTING) {
@@ -129,4 +131,13 @@ Module.prototype.require = function(id){
   var refUri = mod.uri || forkjs.cwd;
   return Module.get(Module.resolve(id, refUri)).exec();
 };
+
+function executeMain(){
+  console.log(MAIN_SCRIPT);
+  Module.get(MAIN_SCRIPT);
+}
+
+window.hand = executeMain;
+
+
 
