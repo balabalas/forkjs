@@ -132,12 +132,10 @@ Module.prototype.require = function(id){
   return Module.get(Module.resolve(id, refUri)).exec();
 };
 
+// this is just for test. should delete after test
 function executeMain(){
   console.log(MAIN_SCRIPT);
   Module.get(MAIN_SCRIPT);
 }
-
 window.hand = executeMain;
-
-
 

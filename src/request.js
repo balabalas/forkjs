@@ -36,8 +36,8 @@ function request(url, module) {
 
   currentlyAddingScript = null;
 
-  while(module.status < STATUS.EXECUTING) {
-    setTimeout(wait, 10);
+  if(module.status < STATUS.EXECUTING) {
+    setTimeout(wait, 100);
   }
 
   return module;
@@ -47,11 +47,12 @@ function request(url, module) {
 function addOnload(node, callback, global, module) {
 
   // when node append to dom
-  node.onload = node.onerror = function() {
+  node.onload = node.onerror = node.onreadystatechange = function() {
 
+    console.log('module.execute...');
     if(READY_STATE_REG.test(node.readyState)) {
       // remove handler
-      node.onload = node.onerror = null;
+      node.onload = node.onerror = node.onreadystatechange = null;
       // set module.status to EXECUTING
       module.status = STATUS.EXECUTING;
 
