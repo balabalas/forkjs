@@ -21,11 +21,13 @@ function request(url, module) {
   var global = clone(window);
   window.global = global;
 
-  checkScriptLoadState = setInterval(addOnload, 100);
-  // // append node status
-  // if(module.status < STATUS.LOADED) {
-  //   addOnload(node, global, module);
-  // }
+  checkScriptLoadState = setInterval(function(){
+    addOnload(node, global, module);
+  }, 10);
+  // append node status
+  if(module.status < STATUS.LOADED) {
+    addOnload(node, global, module);
+  }
 
   module.status = STATUS.LOADED;
 
@@ -46,7 +48,7 @@ function request(url, module) {
 }
 
 // invoke after node been loaded
-function addOnload(node, callback, global, module) {
+function addOnload(node, global, module) {
 
   // when node append to dom
   node.onload = node.onerror = node.onreadystatechange = function() {
@@ -65,7 +67,7 @@ function addOnload(node, callback, global, module) {
       node = null;
 
       // save module status here.
-      module.save();
+      // module.save();
 
       resumeWindow(global);
     }

@@ -8,7 +8,7 @@ var callbackList = {};
 // module constructor
 function Module(uri){
   this.uri = uri;
-  this.exports = null;
+  this.exports = {};
   this.status = 0;
 }
 
@@ -121,6 +121,11 @@ Module.prototype.exec = function() {
 
  if(mod.status >= STATUS.EXECUTING) {
     ret = mod.exports;
+  }
+
+  if(checkScriptLoadState) {
+    clearInterval(checkScriptLoadState);
+    checkScriptLoadState = null;
   }
   // execute just return that exports.
   return ret;
