@@ -59,6 +59,13 @@ module.exports = function(grunt){
     grunt.file.write(filepath, code);
   });
 
+  grunt.registerTask('testFile', function(){
+    var filepath = 'lib/fork.js';
+    var destpath = 'test/fork.js';
+
+    grunt.file.copy(filepath, destpath);
+  });
+
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -68,10 +75,9 @@ module.exports = function(grunt){
       'concat',
       'jshint:afterConcat',
       'updateVersion',
-      'uglify'
+      'uglify',
+      'testFile'
   ]);
 
 };
-
-
 

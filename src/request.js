@@ -3,6 +3,7 @@ var READY_STATE_REG = /^(?:loaded|complete|undefined)$/;
 
 var currentlyAddingScript;
 var interactiveScript;
+var checkScriptLoadState;
 
 function request(url, module) {
   var node = document.createElement('script');
@@ -20,10 +21,11 @@ function request(url, module) {
   var global = clone(window);
   window.global = global;
 
-  // append node status
-  if(module.status < STATUS.LOADED) {
-    addOnload(node, global, module);
-  }
+  checkScriptLoadState = setInterval(addOnload, 100);
+  // // append node status
+  // if(module.status < STATUS.LOADED) {
+  //   addOnload(node, global, module);
+  // }
 
   module.status = STATUS.LOADED;
 
@@ -36,9 +38,9 @@ function request(url, module) {
 
   currentlyAddingScript = null;
 
-  if(module.status < STATUS.EXECUTING) {
-    setTimeout(wait, 100);
-  }
+//  if(module.status < STATUS.EXECUTING) {
+//    setTimeout(wait, 100);
+//  }
 
   return module;
 }
@@ -49,7 +51,8 @@ function addOnload(node, callback, global, module) {
   // when node append to dom
   node.onload = node.onerror = node.onreadystatechange = function() {
 
-    console.log('module.execute...');
+    console.log('module.execute...' + (new Date()).getTime());
+    clearInterval(checkScriptLoadState);
     if(READY_STATE_REG.test(node.readyState)) {
       // remove handler
       node.onload = node.onerror = node.onreadystatechange = null;
