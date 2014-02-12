@@ -1,8 +1,8 @@
 # fork.js
-[fork.js](http://forkjs.org)
+[fork.js](http://forkjs.dmdgeeker.com)
 
 
-## Target
+## Why
 [Why i create this repo](./docs/reason_cn.md)
 
 
